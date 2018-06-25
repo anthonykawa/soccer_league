@@ -1,9 +1,6 @@
 
 import csv
 
-TEAMS = ["Raptors", "Dragons", "Sharks"]
-CSV_FILE = 'soccer_players.csv'
-
 # Will take in a csv file and return a dict of the player details in a list format
 def csv_to_players(file):
     results = []
@@ -29,8 +26,7 @@ def create_teams_file(teams):
             file.write('-'*30 + "\n")
             for player in team['players']:
                 file.write(player['Name'] + ", " + player['Soccer Experience'] + ", " + player['Guardian Name(s)'] + "\n")
-            file.write("\n")
-            file.write("\n")
+            file.write("\n\n")
 
 def create_welcome_letters(teams):
     for team in teams:
@@ -53,13 +49,16 @@ def players_to_file(players):
     pass
 
 def run():
-
+    TEAMS = ["Raptors", "Dragons", "Sharks"]
+    CSV_FILE = 'soccer_players.csv'
     teams = []
+
     for team in TEAMS:
         teams.append(create_player(team))
 
     # get players from CSV file and assign them to players
     players = csv_to_players(CSV_FILE)
+
     # Separate the experienced players from the inexperienced players
     exp_players = []
     inexp_players = []
@@ -68,10 +67,14 @@ def run():
             exp_players.append(player)
         else:
             inexp_players.append(player)
+
     create_teams(exp_players, teams)
     create_teams(inexp_players, teams)
+
     update_avg_height(teams)
+
     create_teams_file(teams)
+
     create_welcome_letters(teams)
 
 
