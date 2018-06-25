@@ -33,7 +33,14 @@ def create_welcome_letters(teams):
         team_name = team['team_name']
         for player in team['players']:
             names = player['Name'].split()
-            with open(names[0].lower() + "_" + names[1].lower() + ".txt", "w"):
+            with open(names[0].lower() + "_" + names[1].lower() + ".txt", "w") as File:
+                File.write("Dear " + player['Guardian Name(s)'] + ",\n\n")
+                File.write("First, I would like to welcome " + names[0] + " " + names[1] + " to the " + team_name + ".")
+                File.write(" The first practice will be starting on July 1st\nat 6:30 PM, so please make sure you arrive on time, ")
+                File.write("and have all the necessary paperwork filled out before\nthen.")
+                File.write("\n\n")
+                File.write("Thank you,\n")
+                File.write("Coach Carter")
                 pass            
 
 # Update the average height within the teams dictionary 
@@ -44,9 +51,6 @@ def update_avg_height(teams):
             total_height += int(player['Height (inches)'])
         team.update({'avg_height': total_height/len(team['players'])})
 
-# take in players and write to file the teams and their respective players
-def players_to_file(players):
-    pass
 
 def run():
     TEAMS = ["Raptors", "Dragons", "Sharks"]
@@ -56,7 +60,7 @@ def run():
     for team in TEAMS:
         teams.append(create_player(team))
 
-    # get players from CSV file and assign them to players
+    # get players from CSV file and assign them to players variable
     players = csv_to_players(CSV_FILE)
 
     # Separate the experienced players from the inexperienced players
@@ -67,7 +71,8 @@ def run():
             exp_players.append(player)
         else:
             inexp_players.append(player)
-
+    # create the teams, and add the players to the teams so there are an equal number of players on the teams
+    # Also distribute the experienced and inexperienced players evenly
     create_teams(exp_players, teams)
     create_teams(inexp_players, teams)
 
