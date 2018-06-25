@@ -48,8 +48,7 @@ def create_welcome_letters(teams):
                 File.write("and have all the necessary paperwork filled out before\nthen.")
                 File.write("\n\n")
                 File.write("Thank you,\n")
-                File.write("Coach Carter")
-                pass            
+                File.write("Coach Carter")         
 
 # Update the average height within the teams dictionary 
 def update_avg_height(teams):
