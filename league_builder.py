@@ -16,11 +16,37 @@ def csv_to_players(file):
 def create_player(team_name):
     return {"team_name": team_name, "avg_height": 0, "players": []}
 
-
 def create_teams(players, teams):
     while players:
         for team in teams:
             team['players'].append(players.pop(0))
+
+def create_teams_file(teams):
+    with open('teams.txt', 'w') as file:
+        for team in teams:
+            file.write('-'*30 + "\n")
+            file.write(" "*10 + team['team_name'] + "\n")
+            file.write('-'*30 + "\n")
+            for player in team['players']:
+                file.write(player['Name'] + ", " + player['Soccer Experience'] + ", " + player['Guardian Name(s)'] + "\n")
+            file.write("\n")
+            file.write("\n")
+
+def create_welcome_letters(teams):
+    for team in teams:
+        team_name = team['team_name']
+        for player in team['players']:
+            names = player['Name'].split()
+            with open(names[0].lower() + "_" + names[1].lower() + ".txt", "w"):
+                pass            
+
+# Update the average height within the teams dictionary 
+def update_avg_height(teams):
+    for team in teams:
+        total_height = 0
+        for player in team['players']:
+            total_height += int(player['Height (inches)'])
+        team.update({'avg_height': total_height/len(team['players'])})
 
 # take in players and write to file the teams and their respective players
 def players_to_file(players):
@@ -43,7 +69,10 @@ def run():
         else:
             inexp_players.append(player)
     create_teams(exp_players, teams)
-    create_teams(inexp_players, teams)\
+    create_teams(inexp_players, teams)
+    update_avg_height(teams)
+    create_teams_file(teams)
+    create_welcome_letters(teams)
 
 
 if __name__ == "__main__":
